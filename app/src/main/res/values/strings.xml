@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Chords &amp; Lyrics TV</string>
+
+    <!-- Sidebar -->
+    <string name="nav_search">חיפוש</string>
+    <string name="nav_my_songs">השירים שלי</string>
+    <string name="nav_settings">הגדרות</string>
+    <string name="nav_help">עזרה</string>
+
+    <!-- Search -->
+    <string name="search_hint">חפש שיר, אמן או מילים… (Hebrew and English supported)</string>
+    <string name="featured_title">תוצאות פופולריות / המלצות</string>
+    <string name="results_title">תוצאות חיפוש</string>
+    <string name="no_results">לא נמצאו שירים</string>
+
+    <!-- My songs -->
+    <string name="my_songs_title">השירים שלי</string>
+    <string name="my_songs_empty">עדיין לא שמרת שירים. לחץ על ★ במסך השיר כדי להוסיף.</string>
+
+    <!-- Settings -->
+    <string name="settings_title">הגדרות</string>
+    <string name="settings_font_size">גודל גופן ברירת מחדל</string>
+    <string name="settings_scroll_speed">מהירות גלילה ברירת מחדל</string>
+    <string name="settings_prefer_flats">סימון אקורדים</string>
+    <string name="settings_sharps">דיאזים (#)</string>
+    <string name="settings_flats">במולים (b)</string>
+
+    <!-- Help -->
+    <string name="help_title">עזרה</string>
+    <string name="help_body">במסך השיר:\n• OK / Play-Pause – הפעלה ועצירה של גלילה אוטומטית\n• שמאל / ימין (או Rewind / Fast-Forward) – שינוי מהירות הגלילה\n• Previous / Next – טרנספוזיציה (סולם) מטה / מעלה\n• למעלה / למטה – גלילה ידנית במילים\n• כפתורי הסרגל העליון – מהירות, סולם, גודל גופן, שמירה למועדפים\n\nאקורדים נכתבים בפורמט ChordPro: [Am]מילים [G]מילים</string>
+
+    <!-- Song viewer -->
+    <string name="song_autoscroll">גלילה</string>
+    <string name="song_speed">מהירות</string>
+    <string name="song_key">סולם</string>
+    <string name="song_font">גופן</string>
+    <string name="song_hint">OK = גלילה אוטומטית · ◀ ▶ = מהירות · ⏮ ⏭ = סולם · ▲ ▼ = גלילה ידנית</string>
+    <string name="back">חזרה</string>
+</resources>

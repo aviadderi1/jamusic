@@ -55,7 +55,9 @@ import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import com.aviad.chordstv.R
 import com.aviad.chordstv.domain.model.Song
+import com.aviad.chordstv.domain.model.WebSource
 import com.aviad.chordstv.ui.components.SongCard
+import com.aviad.chordstv.ui.components.TvPillButton
 import com.aviad.chordstv.ui.theme.AccentCyan
 import com.aviad.chordstv.ui.theme.BgSurface
 import com.aviad.chordstv.ui.theme.TextPrimary
@@ -70,12 +72,18 @@ fun SearchPane(
     favoriteIds: Set<String>,
     onQueryChange: (String) -> Unit,
     onSubmit: () -> Unit,
-    onOpenSong: (Song) -> Unit
+    onOpenSong: (Song) -> Unit,
+    onOpenWeb: (String) -> Unit
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
         SearchField(query = query, onQueryChange = onQueryChange, onSubmit = onSubmit)
 
-        Spacer(Modifier.height(36.dp))
+        Spacer(Modifier.height(18.dp))
+
+        // Where to search: the built-in catalogue, or an external site in the TV browser.
+        WebSourceRow(query = query, onOpenWeb = onOpenWeb)
+
+        Spacer(Modifier.height(24.dp))
 
         if (query.isBlank()) {
             SectionTitle(stringResource(R.string.featured_title))
@@ -110,6 +118,33 @@ fun SearchPane(
                         SongCard(song = song, isFavorite = song.id in favoriteIds, onClick = { onOpenSong(song) })
                     }
                 }
+            }
+        }
+    }
+}
+
+@Composable
+private fun WebSourceRow(query: String, onOpenWeb: (String) -> Unit) {
+    val suggested = WebSource.suggestFor(query)
+    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = stringResource(R.string.search_on_web),
+                style = MaterialTheme.typography.bodyLarge,
+                color = TextSecondary
+            )
+            WebSource.entries.forEach { source ->
+                TvPillButton(
+                    text = source.label,
+                    selected = query.isNotBlank() && source == suggested,
+                    onClick = {
+                        onOpenWeb(if (query.isBlank()) source.homeUrl else source.searchUrl(query))
+                    }
+                )
             }
         }
     }

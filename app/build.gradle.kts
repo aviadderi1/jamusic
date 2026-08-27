@@ -11,8 +11,8 @@ android {
         applicationId = "com.aviad.chordstv"
         minSdk = 24          // Android 7.0 – covers virtually every Android TV / streamer box
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0.0"
+        versionCode = 2
+        versionName = "1.1.0"
         vectorDrawables.useSupportLibrary = true
     }
 

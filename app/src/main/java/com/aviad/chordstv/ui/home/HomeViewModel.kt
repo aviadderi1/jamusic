@@ -2,6 +2,7 @@ package com.aviad.chordstv.ui.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.aviad.chordstv.data.repository.CatalogStatus
 import com.aviad.chordstv.di.AppContainer
 import com.aviad.chordstv.domain.model.Song
 import com.aviad.chordstv.domain.repository.UserPreferences
@@ -35,12 +36,18 @@ class HomeViewModel(private val container: AppContainer) : ViewModel() {
     val preferences: StateFlow<UserPreferences> = container.userPreferencesRepository.preferences
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), UserPreferences())
 
+    val catalogStatus: StateFlow<CatalogStatus> = container.remoteSongRepository.status
+
     private val queryFlow = MutableStateFlow("")
     private var searchJob: Job? = null
 
     init {
+        // Featured list follows the catalogue (refreshes when the remote catalogue loads)
         viewModelScope.launch {
-            _state.update { it.copy(featured = container.getFeaturedSongs()) }
+            container.remoteSongRepository.status.collect {
+                _state.update { it.copy(featured = container.getFeaturedSongs()) }
+                if (_state.value.query.isNotBlank()) runSearch(_state.value.query)
+            }
         }
         // Debounced search-as-you-type
         viewModelScope.launch {
@@ -88,4 +95,11 @@ class HomeViewModel(private val container: AppContainer) : ViewModel() {
     fun setPreferFlats(flats: Boolean) = viewModelScope.launch {
         container.userPreferencesRepository.setPreferFlats(flats)
     }
+
+    fun setCatalogUrl(url: String) = viewModelScope.launch {
+        container.userPreferencesRepository.setCatalogUrlOverride(url)
+        container.refreshCatalog()
+    }
+
+    fun refreshCatalog() = container.refreshCatalog()
 }

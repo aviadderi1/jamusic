@@ -12,11 +12,14 @@
     <string name="search_hint">חפש שיר, אמן או מילים… (Hebrew and English supported)</string>
     <string name="featured_title">תוצאות פופולריות / המלצות</string>
     <string name="results_title">תוצאות חיפוש</string>
-    <string name="no_results">לא נמצאו שירים</string>
+    <string name="no_results">לא נמצאו שירים בקטלוג – נסה חיפוש באינטרנט למעלה</string>
+    <string name="search_on_web">חיפוש באינטרנט:</string>
 
     <!-- My songs -->
     <string name="my_songs_title">השירים שלי</string>
-    <string name="my_songs_empty">עדיין לא שמרת שירים. לחץ על ★ במסך השיר כדי להוסיף.</string>
+    <string name="my_songs_empty">עדיין לא שמרת שירים. לחץ על ★ במסך השיר או בדפדפן כדי להוסיף.</string>
+    <string name="my_songs_catalog">מהקטלוג</string>
+    <string name="my_songs_web">דפים שמורים מהאינטרנט</string>
 
     <!-- Settings -->
     <string name="settings_title">הגדרות</string>
@@ -25,10 +28,17 @@
     <string name="settings_prefer_flats">סימון אקורדים</string>
     <string name="settings_sharps">דיאזים (#)</string>
     <string name="settings_flats">במולים (b)</string>
+    <string name="settings_catalog_title">קטלוג שירים משלי (JSON)</string>
+    <string name="settings_catalog_refresh">רענן קטלוג</string>
+    <string name="settings_catalog_hint">השאר ריק כדי להשתמש בכתובת שמוגדרת בקוד (CatalogConfig.kt). הפורמט מתועד בקובץ catalog/songs.json במאגר.</string>
+    <string name="catalog_idle">לא נטען</string>
+    <string name="catalog_loading">טוען…</string>
+    <string name="catalog_loaded">נטענו %1$d שירים</string>
+    <string name="catalog_error">שגיאה</string>
 
     <!-- Help -->
     <string name="help_title">עזרה</string>
-    <string name="help_body">במסך השיר:\n• OK / Play-Pause – הפעלה ועצירה של גלילה אוטומטית\n• שמאל / ימין (או Rewind / Fast-Forward) – שינוי מהירות הגלילה\n• Previous / Next – טרנספוזיציה (סולם) מטה / מעלה\n• למעלה / למטה – גלילה ידנית במילים\n• כפתורי הסרגל העליון – מהירות, סולם, גודל גופן, שמירה למועדפים\n\nאקורדים נכתבים בפורמט ChordPro: [Am]מילים [G]מילים</string>
+    <string name="help_body">במסך השיר:\n• OK / Play-Pause – הפעלה ועצירה של גלילה אוטומטית\n• שמאל / ימין (או Rewind / Fast-Forward) – שינוי מהירות הגלילה\n• Previous / Next – טרנספוזיציה (סולם) מטה / מעלה\n• למעלה / למטה – גלילה ידנית במילים\n• כפתורי הסרגל העליון – מהירות, סולם, גודל גופן, שמירה למועדפים\n\nחיפוש באינטרנט (Tab4U / Ultimate Guitar / Google):\n• החצים מזיזים סמן על הדף, OK לוחץ\n• Play-Pause – גלילה אוטומטית, RW/FF – מהירות\n• A− / A+ – גודל טקסט, ★ – שמירת הדף ב"השירים שלי"\n\nקטלוג משלך: קובץ JSON בכתובת שמוגדרת בהגדרות (או ב-CatalogConfig.kt). אקורדים בפורמט ChordPro: [Am]מילים [G]מילים</string>
 
     <!-- Song viewer -->
     <string name="song_autoscroll">גלילה</string>
@@ -37,4 +47,5 @@
     <string name="song_font">גופן</string>
     <string name="song_hint">OK = גלילה אוטומטית · ◀ ▶ = מהירות · ⏮ ⏭ = סולם · ▲ ▼ = גלילה ידנית</string>
     <string name="back">חזרה</string>
+    <string name="web_hint">חצים = הזזת הסמן · OK = לחיצה · Play-Pause = גלילה אוטומטית · RW/FF = מהירות · CH+/CH− = עמוד</string>
 </resources>

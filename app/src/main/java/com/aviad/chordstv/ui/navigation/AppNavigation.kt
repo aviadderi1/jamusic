@@ -1,5 +1,6 @@
 package com.aviad.chordstv.ui.navigation
 
+import android.net.Uri
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -9,11 +10,14 @@ import androidx.navigation.navArgument
 import com.aviad.chordstv.di.AppContainer
 import com.aviad.chordstv.ui.home.HomeScreen
 import com.aviad.chordstv.ui.song.SongScreen
+import com.aviad.chordstv.ui.web.WebScreen
 
 object Routes {
     const val HOME = "home"
     const val SONG = "song/{songId}"
+    const val WEB = "web/{url}"
     fun song(id: String) = "song/$id"
+    fun web(url: String) = "web/" + Uri.encode(url)
 }
 
 @Composable
@@ -24,7 +28,8 @@ fun AppNavigation(container: AppContainer) {
         composable(Routes.HOME) {
             HomeScreen(
                 container = container,
-                onOpenSong = { song -> navController.navigate(Routes.song(song.id)) }
+                onOpenSong = { song -> navController.navigate(Routes.song(song.id)) },
+                onOpenWeb = { url -> navController.navigate(Routes.web(url)) }
             )
         }
         composable(
@@ -36,6 +41,17 @@ fun AppNavigation(container: AppContainer) {
                 container = container,
                 songId = songId,
                 onBack = { navController.popBackStack() }
+            )
+        }
+        composable(
+            route = Routes.WEB,
+            arguments = listOf(navArgument("url") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val url = backStackEntry.arguments?.getString("url").orEmpty()
+            WebScreen(
+                container = container,
+                initialUrl = url,
+                onExit = { navController.popBackStack() }
             )
         }
     }

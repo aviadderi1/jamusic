@@ -6,8 +6,10 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.core.stringSetPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import com.aviad.chordstv.domain.model.WebBookmark
 import com.aviad.chordstv.domain.repository.UserPreferences
 import com.aviad.chordstv.domain.repository.UserPreferencesRepository
 import kotlinx.coroutines.flow.Flow
@@ -22,6 +24,9 @@ class DataStoreUserPreferencesRepository(private val context: Context) : UserPre
         val FONT_SP = intPreferencesKey("default_font_sp")
         val SCROLL_SPEED = intPreferencesKey("default_scroll_speed")
         val PREFER_FLATS = booleanPreferencesKey("prefer_flats")
+        val CATALOG_URL = stringPreferencesKey("catalog_url_override")
+        val WEB_BOOKMARKS = stringSetPreferencesKey("web_bookmarks")
+        val WEB_TEXT_ZOOM = intPreferencesKey("web_text_zoom")
     }
 
     override val preferences: Flow<UserPreferences> = context.dataStore.data.map { p ->
@@ -29,7 +34,12 @@ class DataStoreUserPreferencesRepository(private val context: Context) : UserPre
             favoriteIds = p[Keys.FAVORITES] ?: emptySet(),
             defaultFontSp = p[Keys.FONT_SP] ?: 26,
             defaultScrollSpeed = p[Keys.SCROLL_SPEED] ?: 3,
-            preferFlats = p[Keys.PREFER_FLATS] ?: false
+            preferFlats = p[Keys.PREFER_FLATS] ?: false,
+            catalogUrlOverride = p[Keys.CATALOG_URL] ?: "",
+            webBookmarks = (p[Keys.WEB_BOOKMARKS] ?: emptySet())
+                .mapNotNull { WebBookmark.decode(it) }
+                .sortedBy { it.title },
+            webTextZoom = p[Keys.WEB_TEXT_ZOOM] ?: 140
         )
     }
 
@@ -50,5 +60,21 @@ class DataStoreUserPreferencesRepository(private val context: Context) : UserPre
 
     override suspend fun setPreferFlats(preferFlats: Boolean) {
         context.dataStore.edit { it[Keys.PREFER_FLATS] = preferFlats }
+    }
+
+    override suspend fun setCatalogUrlOverride(url: String) {
+        context.dataStore.edit { it[Keys.CATALOG_URL] = url.trim() }
+    }
+
+    override suspend fun toggleWebBookmark(bookmark: WebBookmark) {
+        context.dataStore.edit { p ->
+            val current = p[Keys.WEB_BOOKMARKS] ?: emptySet()
+            val existing = current.firstOrNull { WebBookmark.decode(it)?.url == bookmark.url }
+            p[Keys.WEB_BOOKMARKS] = if (existing != null) current - existing else current + bookmark.encode()
+        }
+    }
+
+    override suspend fun setWebTextZoom(percent: Int) {
+        context.dataStore.edit { it[Keys.WEB_TEXT_ZOOM] = percent.coerceIn(80, 250) }
     }
 }

@@ -24,13 +24,15 @@ import com.aviad.chordstv.ui.components.Sidebar
 @Composable
 fun HomeScreen(
     container: AppContainer,
-    onOpenSong: (Song) -> Unit
+    onOpenSong: (Song) -> Unit,
+    onOpenWeb: (String) -> Unit
 ) {
     val viewModel: HomeViewModel = viewModel(
         factory = viewModelFactory { initializer { HomeViewModel(container) } }
     )
     val state by viewModel.state.collectAsStateWithLifecycle()
     val prefs by viewModel.preferences.collectAsStateWithLifecycle()
+    val catalogStatus by viewModel.catalogStatus.collectAsStateWithLifecycle()
 
     Row(modifier = Modifier.fillMaxSize()) {
         Sidebar(selected = state.nav, onSelect = viewModel::selectNav)
@@ -49,17 +51,23 @@ fun HomeScreen(
                     favoriteIds = prefs.favoriteIds,
                     onQueryChange = viewModel::onQueryChange,
                     onSubmit = viewModel::submitSearch,
-                    onOpenSong = onOpenSong
+                    onOpenSong = onOpenSong,
+                    onOpenWeb = onOpenWeb
                 )
                 NavItem.MY_SONGS -> MySongsPane(
                     songs = state.favorites,
-                    onOpenSong = onOpenSong
+                    bookmarks = prefs.webBookmarks,
+                    onOpenSong = onOpenSong,
+                    onOpenWeb = onOpenWeb
                 )
                 NavItem.SETTINGS -> SettingsPane(
                     prefs = prefs,
+                    catalogStatus = catalogStatus,
                     onFontChange = viewModel::setDefaultFont,
                     onSpeedChange = viewModel::setDefaultSpeed,
-                    onPreferFlats = viewModel::setPreferFlats
+                    onPreferFlats = viewModel::setPreferFlats,
+                    onCatalogUrlChange = viewModel::setCatalogUrl,
+                    onRefreshCatalog = viewModel::refreshCatalog
                 )
                 NavItem.HELP -> HelpPane()
             }

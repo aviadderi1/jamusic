@@ -1,0 +1,30 @@
+{
+  "songs": [
+    {
+      "id": "demo-he-100",
+      "title": "שיר לדוגמה בקטלוג",
+      "artist": "האמן שלי",
+      "language": "he",
+      "key": "Em",
+      "tags": ["דוגמה"],
+      "body": [
+        "#בית",
+        "[Em]זהו שיר [C]שנטען מהאינטרנט",
+        "[G]מקובץ JSON [D]שאני עורך בעצמי",
+        "",
+        "#פזמון",
+        "[C]כל שורה [G]בפורמט ChordPro",
+        "[D]והאקורד יושב [Em]מעל המילה"
+      ]
+    },
+    {
+      "id": "demo-en-100",
+      "title": "Catalog Example",
+      "artist": "My Artist",
+      "language": "en",
+      "key": "C",
+      "tags": ["example"],
+      "body": "#Verse\n[C]This song was [G]loaded from the web\n[Am]From a JSON [F]file I edit myself\n\n#Chorus\n[F]Chords in [G]brackets, [C]lyrics after"
+    }
+  ]
+}
